@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          新屋落成！ - Axel&#39;s | Blog
+          Ruby 世界的符號代表什麼？ - Axel&#39;s | Blog
         
     </title>
 
-    <link rel="canonical" href="http://axelchen.com/article/新屋落成/">
+    <link rel="canonical" href="http://axelchen.com/article/Ruby-世界裡的符號代表什麼？/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -88,14 +88,14 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#blog" title="blog">blog</a>
+                              <a class="tag" href="/tags/#學習日記" title="學習日記">學習日記</a>
                             
                         </div>
-                        <h1>新屋落成！</h1>
+                        <h1>Ruby 世界的符號代表什麼？</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Axel Chen on
-                            2019-09-10
+                            2019-09-12
                         </span>
                     </div>
                 
@@ -212,13 +212,63 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="新屋落成">新屋落成</h1>
-<h2 id="hi我是axel">Hi,我是Axel</h2>
-<h3 id="經濟畢業的文組生嚮往程式的密碼世界"><em>經濟畢業的文組生，嚮往程式的密碼世界。</em></h3>
-<p>這裡是以技術文章、學習心得、筆記、日常生活為主！<br>
-有自己的Blog後，慢慢會把Medium文章移到這裡<br>
-還請大家多多指教！</p>
-<h4 id="只能說有自己的blog-真好">只能說有自己的Blog 真好!</h4>
+                <h1 id="whats-symbol-符號">What’s Symbol (符號)？</h1>
+<p>剛開始學Ruby 常會看到這些 :name, :age ……等等，只知道看到這些前面有:id 的符號，<br>
+它叫symbol ，其他仍然一頭霧水，直到某天突然頓悟了ＸＤ<br>
+到底什麼是Synbol?<br>
+首先，先去Ruby API 查詢一下定義</p>
+<p><em>Symbol objects represent names and some strings inside the Ruby interpreter. They are generated using the :name and :“string” literals syntax, and by the various to_sym methods. The same Symbol object will be created for a given name or string for the duration of a program’s execution, regardless of the context or meaning of that name.</em></p>
+<h3 id="翻譯蒟蒻">翻譯蒟蒻：</h3>
+<p>Symbol 物件表示 Ruby直譯器中的「名稱」及某些「字串」。<br>
+Symbol 可以用：name和：“string” 語法以及各種 to_sym 方法生成。無論內容或含義為何，都會在程序執行的期間為該名稱或字串創建相同的 Symbol 物件。<br>
+看到這邊還是一頭霧水？沒關係一開始我也是！！！<br>
+在Ruby的世界裡任何東西都可以是物件（Object），在這邊可以先把符號（Symbol）想成是一個「有名字的物件」，這樣或許會比較好理解，我們常會看到 :name :age這樣的用法，而這種用法我們就稱為 Symbol，而它所指向的地方，其實是指電腦裡記憶體位置。</p>
+<h3 id="symbol跟string有什麼不同">Symbol跟String有什麼不同？</h3>
+<p>&quot;String的內容可以改變，但Symbol不行！&quot;<br>
+Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )。</p>
+<h3 id="這邊我們可以利用以下例子做說明">這邊我們可以利用以下例子做說明</h3>
+<h4 id="string">String</h4>
+<p>5.times do<br>
+puts&quot;hahaha&quot;.object_id<br>
+end</p>
+<h4 id="這邊會得到">這邊會得到</h4>
+<p>70118281331520<br>
+70118281331080<br>
+70118273359620<br>
+70118273359300<br>
+70118273358360</p>
+<p>Object_id方法會取得Ruby中唯一的數字編號，從上面例子可以發現Ruby在每次產生新的字串時，都會產生新的Object_id，代表這產生的字串其實都是不同的Object。</p>
+<h4 id="symbol">Symbol</h4>
+<p>5.times do<br>
+puts :hahaha.object_id<br>
+end</p>
+<h4 id="這邊會得到">這邊會得到</h4>
+<p>1056028<br>
+1056028<br>
+1056028<br>
+1056028<br>
+1056028</p>
+<p>有發現嗎？只要都是一樣的Symbol，就會有相同的Object_id，表示這些Symbol都是從記憶體一樣的地方拿取資料，而不是產生新的一份資料，這樣的好處是可以節省記憶體的空間。</p>
+<h3 id="symbol-amp-string-轉換方法">Symbol &amp; String 轉換方法</h3>
+<p>使用 to_sym 可把字串轉成 symbol<br>
+=&gt; “cat”.to_sym<br>
+=&gt; :cat</p>
+<p>使用 to_s 方法可以把 symbol 轉成字串<br>
+=&gt; :cat.to_s<br>
+=&gt; “cat”</p>
+<h3 id="什麼時候該用symbol-amp-string">什麼時候該用Symbol &amp; String ?</h3>
+<p>因為Symbol不可變( immutable )特性，以及從記憶體查找資料的速度比String還要快，適合用來當Hash的Key來找尋資料。</p>
+<h4 id="範例">範例</h4>
+<p>data = { name: “小明” , age: 22 , degree: “大學” }<br>
+=&gt;{ :name=&gt;“小明”, :age=&gt; 22 , :degree=&gt; “大學” }</p>
+<p>而如果單純只是想把資料印出來，那String就很適合，因為Symbol被輸出時，要先轉換成字串，這樣效能上字串上就佔有優勢！</p>
+<h4 id="範例">範例</h4>
+<p>puts “Hello, World”</p>
+<p>參考資料：</p>
+<blockquote>
+<p><a href="https://ruby-doc.org/core-2.5.0/Symbol.html" target="_blank" rel="noopener">https://ruby-doc.org/core-2.5.0/Symbol.html</a><br>
+<a href="https://kaochenlong.com/2016/04/25/string-and-symbol/" target="_blank" rel="noopener">https://kaochenlong.com/2016/04/25/string-and-symbol/</a></p>
+</blockquote>
 
                 
 
@@ -226,10 +276,10 @@
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/Ruby-世界裡的符號代表什麼？/" data-toggle="tooltip" data-placement="top" title="Ruby 世界的符號代表什麼？">&larr; Previous Post</a>
-                        </li>
                     
+                        <li class="next">
+                            <a href="/article/新屋落成/" data-toggle="tooltip" data-placement="top" title="新屋落成！">Next Post &rarr;</a>
+                        </li>
                     
                 </ul>
 
@@ -284,7 +334,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#新屋落成"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x65B0;&#x5C4B;&#x843D;&#x6210;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#hi我是axel"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">Hi,&#x6211;&#x662F;Axel</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#經濟畢業的文組生嚮往程式的密碼世界"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text"><em>&#x7D93;&#x6FDF;&#x7562;&#x696D;&#x7684;&#x6587;&#x7D44;&#x751F;&#xFF0C;&#x56AE;&#x5F80;&#x7A0B;&#x5F0F;&#x7684;&#x5BC6;&#x78BC;&#x4E16;&#x754C;&#x3002;</em></span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#只能說有自己的blog-真好"><span class="toc-nav-number">1.1.1.1.</span> <span class="toc-nav-text">&#x53EA;&#x80FD;&#x8AAA;&#x6709;&#x81EA;&#x5DF1;&#x7684;Blog &#x771F;&#x597D;!</span></a></li></ol></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#whats-symbol-符號"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">What&#x2019;s Symbol&#xA0;(&#x7B26;&#x865F;)&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#翻譯蒟蒻"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x7FFB;&#x8B6F;&#x849F;&#x84BB;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol跟string有什麼不同"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">Symbol&#x8DDF;String&#x6709;&#x4EC0;&#x9EBC;&#x4E0D;&#x540C;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#這邊我們可以利用以下例子做說明"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x4EE5;&#x4E0B;&#x4F8B;&#x5B50;&#x505A;&#x8AAA;&#x660E;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#string"><span class="toc-nav-number">1.0.3.1.</span> <span class="toc-nav-text">String</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.3.2.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#symbol"><span class="toc-nav-number">1.0.3.3.</span> <span class="toc-nav-text">Symbol</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.3.4.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol-amp-string-轉換方法"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">Symbol &amp; String&#xA0;&#x8F49;&#x63DB;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什麼時候該用symbol-amp-string"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x8A72;&#x7528;Symbol &amp; String&#xA0;?</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.5.1.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.5.2.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li></ol></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
@@ -304,7 +354,7 @@
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#blog" title="blog">blog</a>
+                          <a class="tag" href="/tags/#學習日記" title="學習日記">學習日記</a>
                         
                     </div>
                 </section>
