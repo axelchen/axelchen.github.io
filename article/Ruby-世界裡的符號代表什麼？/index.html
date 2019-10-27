@@ -217,7 +217,9 @@
 它叫symbol ，其他仍然一頭霧水，直到某天突然頓悟了ＸＤ<br>
 到底什麼是Synbol?<br>
 首先，先去Ruby API 查詢一下定義</p>
-<p><em>Symbol objects represent names and some strings inside the Ruby interpreter. They are generated using the :name and :“string” literals syntax, and by the various to_sym methods. The same Symbol object will be created for a given name or string for the duration of a program’s execution, regardless of the context or meaning of that name.</em></p>
+<blockquote>
+<p><em>Symbol objects represent names and some strings inside the    Ruby interpreter. They are generated using the :name and :“string” literals syntax, and by the various to_sym methods. The same Symbol object will be created for a given name or string for the duration of a program’s execution, regardless of the context or meaning of that name.</em></p>
+</blockquote>
 <h3 id="翻譯蒟蒻">翻譯蒟蒻：</h3>
 <p>Symbol 物件表示 Ruby直譯器中的「名稱」及某些「字串」。<br>
 Symbol 可以用：name和：“string” 語法以及各種 to_sym 方法生成。無論內容或含義為何，都會在程序執行的期間為該名稱或字串創建相同的 Symbol 物件。<br>
@@ -228,20 +230,26 @@ Symbol 可以用：name和：“string” 語法以及各種 to_sym 方法生成
 Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )。</p>
 <h3 id="這邊我們可以利用以下例子做說明">這邊我們可以利用以下例子做說明</h3>
 <h4 id="string">String</h4>
+<blockquote>
 <p>5.times do<br>
 puts&quot;hahaha&quot;.object_id<br>
 end</p>
+</blockquote>
 <h4 id="這邊會得到">這邊會得到</h4>
+<blockquote>
 <p>70118281331520<br>
 70118281331080<br>
 70118273359620<br>
 70118273359300<br>
 70118273358360</p>
+</blockquote>
 <p>Object_id方法會取得Ruby中唯一的數字編號，從上面例子可以發現Ruby在每次產生新的字串時，都會產生新的Object_id，代表這產生的字串其實都是不同的Object。</p>
 <h4 id="symbol">Symbol</h4>
+<blockquote>
 <p>5.times do<br>
 puts :hahaha.object_id<br>
 end</p>
+</blockquote>
 <h4 id="這邊會得到">這邊會得到</h4>
 <p>1056028<br>
 1056028<br>
@@ -250,20 +258,28 @@ end</p>
 1056028</p>
 <p>有發現嗎？只要都是一樣的Symbol，就會有相同的Object_id，表示這些Symbol都是從記憶體一樣的地方拿取資料，而不是產生新的一份資料，這樣的好處是可以節省記憶體的空間。</p>
 <h3 id="symbol-amp-string-轉換方法">Symbol &amp; String 轉換方法</h3>
+<blockquote>
 <p>使用 to_sym 可把字串轉成 symbol<br>
 =&gt; “cat”.to_sym<br>
 =&gt; :cat</p>
+</blockquote>
+<blockquote>
 <p>使用 to_s 方法可以把 symbol 轉成字串<br>
 =&gt; :cat.to_s<br>
 =&gt; “cat”</p>
+</blockquote>
 <h3 id="什麼時候該用symbol-amp-string">什麼時候該用Symbol &amp; String ?</h3>
 <p>因為Symbol不可變( immutable )特性，以及從記憶體查找資料的速度比String還要快，適合用來當Hash的Key來找尋資料。</p>
 <h4 id="範例">範例</h4>
+<blockquote>
 <p>data = { name: “小明” , age: 22 , degree: “大學” }<br>
 =&gt;{ :name=&gt;“小明”, :age=&gt; 22 , :degree=&gt; “大學” }</p>
+</blockquote>
 <p>而如果單純只是想把資料印出來，那String就很適合，因為Symbol被輸出時，要先轉換成字串，這樣效能上字串上就佔有優勢！</p>
 <h4 id="範例">範例</h4>
+<blockquote>
 <p>puts “Hello, World”</p>
+</blockquote>
 <p>參考資料：</p>
 <blockquote>
 <p><a href="https://ruby-doc.org/core-2.5.0/Symbol.html" target="_blank" rel="noopener">https://ruby-doc.org/core-2.5.0/Symbol.html</a><br>
@@ -275,6 +291,10 @@ end</p>
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
+                    
+                        <li class="previous">
+                            <a href="/article/What-s-Ruby-self/" data-toggle="tooltip" data-placement="top" title="What's Ruby self ?">&larr; Previous Post</a>
+                        </li>
                     
                     
                         <li class="next">
