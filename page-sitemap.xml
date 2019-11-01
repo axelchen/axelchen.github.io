@@ -7,22 +7,22 @@
     </url>
     
     <url>
-        <loc>http://axelchen.com/about/</loc>
-        <lastmod>2019-10-25T06:15:54.543Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.8</priority>
-    </url>
-    
-    <url>
         <loc>http://axelchen.com/tags/</loc>
-        <lastmod>2019-10-25T04:39:28.670Z</lastmod>
+        <lastmod>2019-11-01T06:48:05.334Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
     
     <url>
         <loc>http://axelchen.com/archive/</loc>
-        <lastmod>2019-10-25T04:39:28.618Z</lastmod>
+        <lastmod>2019-11-01T06:39:26.217Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <url>
+        <loc>http://axelchen.com/about/</loc>
+        <lastmod>2019-10-25T06:15:54.543Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
