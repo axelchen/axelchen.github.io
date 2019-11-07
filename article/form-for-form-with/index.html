@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Ruby 世界的符號代表什麼？ - Axel&#39;s | Blog
+          Rails form 表單 - Axel&#39;s | Blog
         
     </title>
 
-    <link rel="canonical" href="http://axelchen.com/article/Ruby-世界裡的符號代表什麼？/">
+    <link rel="canonical" href="http://axelchen.com/article/form-for-form-with/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#學習日記" title="學習日記">學習日記</a>
                             
                         </div>
-                        <h1>Ruby 世界的符號代表什麼？</h1>
+                        <h1>Rails form 表單</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Axel Chen on
-                            2019-09-12
+                            2019-09-21
                         </span>
                     </div>
                 
@@ -212,60 +212,38 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="whats-symbol-符號">What’s Symbol (符號)？</h1>
-<p>剛開始學Ruby 常會看到這些 :name, :age ……等等，只知道看到這些前面有:id 的符號，<br>
-它叫symbol ，其他仍然一頭霧水，直到某天突然頓悟了ＸＤ<br>
-到底什麼是Synbol?<br>
-首先，先去Ruby API 查詢一下定義</p>
-<blockquote>
-<p><em>Symbol objects represent names and some strings inside the    Ruby interpreter. They are generated using the :name and :“string” literals syntax, and by the various to_sym methods. The same Symbol object will be created for a given name or string for the duration of a program’s execution, regardless of the context or meaning of that name.</em></p>
-</blockquote>
-<h3 id="翻譯蒟蒻">翻譯蒟蒻：</h3>
-<p>Symbol 物件表示 Ruby直譯器中的「名稱」及某些「字串」。<br>
-Symbol 可以用：name和：“string” 語法以及各種 to_sym 方法生成。無論內容或含義為何，都會在程序執行的期間為該名稱或字串創建相同的 Symbol 物件。<br>
-看到這邊還是一頭霧水？沒關係一開始我也是！！！<br>
-在Ruby的世界裡任何東西都可以是物件（Object），在這邊可以先把符號（Symbol）想成是一個「有名字的物件」，這樣或許會比較好理解，我們常會看到 :name :age這樣的用法，而這種用法我們就稱為 Symbol，而它所指向的地方，其實是指電腦裡記憶體位置。</p>
-<h3 id="symbol跟string有什麼不同">Symbol跟String有什麼不同？</h3>
-<p>&quot;String的內容可以改變，但Symbol不行！&quot;<br>
-Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )。</p>
-<h3 id="這邊我們可以利用以下例子做說明">這邊我們可以利用以下例子做說明</h3>
-<h3 id="string">String</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span></span><br><span class="line">  puts<span class="string">"hahaha"</span>.object_id</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="這邊會得到">這邊會得到</h4>
-<blockquote>
-<p>70118281331520<br>
-70118281331080<br>
-70118273359620<br>
-70118273359300<br>
-70118273358360</p>
-</blockquote>
-<p>Object_id方法會取得Ruby中唯一的數字編號，從上面例子可以發現Ruby在每次產生新的字串時，都會產生新的Object_id，代表這產生的字串其實都是不同的Object。</p>
-<h3 id="symbol">Symbol</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span></span><br><span class="line">  puts <span class="symbol">:hahaha</span>.object_id</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="這邊會得到">這邊會得到</h4>
-<blockquote>
-<p>1056028<br>
-1056028<br>
-1056028<br>
-1056028<br>
-1056028</p>
-</blockquote>
-<p>有發現嗎？只要都是一樣的Symbol，就會有相同的Object_id，表示這些Symbol都是從記憶體一樣的地方拿取資料，而不是產生新的一份資料，這樣的好處是可以節省記憶體的空間。</p>
-<h3 id="symbol-amp-string-轉換方法">Symbol &amp; String 轉換方法</h3>
-<p>使用 to_sym 可把字串轉成 symbol</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="string">"cat"</span>.to_sym</span><br><span class="line">=&gt; <span class="symbol">:cat</span></span><br></pre></td></tr></table></figure>
-<p>使用 to_s 方法可以把 symbol 轉成字串</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="symbol">:cat</span>.to_s</span><br><span class="line">=&gt; <span class="string">"cat"</span></span><br></pre></td></tr></table></figure>
-<h3 id="什麼時候該用symbol-amp-string">什麼時候該用Symbol &amp; String ?</h3>
-<p>因為Symbol不可變( immutable )特性，以及從記憶體查找資料的速度比String還要快，適合用來當Hash的Key來找尋資料。</p>
-<h3 id="範例">範例</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = &#123; <span class="symbol">name:</span> <span class="string">"小明"</span> , <span class="symbol">age:</span> <span class="number">22</span> , <span class="symbol">degree:</span> <span class="string">"大學"</span> &#125;</span><br><span class="line">=&gt;&#123; <span class="symbol">:name=&gt;<span class="string">"小明"</span></span>, <span class="symbol">:age=&gt;</span> <span class="number">22</span> , <span class="symbol">:degree=&gt;</span> <span class="string">"大學"</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>而如果單純只是想把資料印出來，那String就很適合，因為Symbol被輸出時，要先轉換成字串，這樣效能上字串上就佔有優勢！</p>
-<h3 id="範例">範例</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts <span class="string">"Hello, World"</span></span><br></pre></td></tr></table></figure>
-<h3 id="參考資料">參考資料：</h3>
-<p><a href="https://ruby-doc.org/core-2.5.0/Symbol.html" target="_blank" rel="noopener">Ruby Doc</a><br>
-<a href="https://kaochenlong.com/2016/04/25/string-and-symbol/" target="_blank" rel="noopener">Ruby 語法放大鏡之「有的變數變前面有一個冒號(例如 :name)，是什麼意思?」</a></p>
+                <h1 id="form_tag">form_tag</h1>
+<p>以前要建立表單的時候，會根據是否已建立 model 來選擇 form 的方法，在還沒建立任何 model 之前，通常會使用 form_tag 來做較簡單的表單。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_tag <span class="keyword">do</span> %&gt;</span><br><span class="line">  This A Form</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>Rails 會自動幫你生成長出這些東西：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">action</span>=<span class="string">"/member/show"</span> <span class="attr">accept-charset</span>=<span class="string">"UTF-8"</span> <span class="attr">method</span>=<span class="string">"post"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">name</span>=<span class="string">"utf8"</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">value</span>=<span class="string">"✓"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"hidden"</span> <span class="attr">name</span>=<span class="string">"authenticity_token"</span> <span class="attr">value</span>=<span class="string">"UgefBstVew/QQcuSk7rmjCByQBSvHPfmENYM096Je0ltEY9ileVA0YCrS1NigCgI5Yv4R/dlIt5q85RxrTI3sg=="</span> /&gt;</span></span><br><span class="line"> This A Form</span><br><span class="line"><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>這邊需特別注意 *<br>
+第一個 name 屬性為 utf8 的 input，讓瀏覽器使用該表單指定的編碼。<br>
+第二個 name 屬性為 authenticity_token 的 input，<br>
+是 Rails 內建用來防止 CSRF (cross-site request forgery protection) 攻擊的安全機制。</li>
+</ul>
+<h3 id="什麼是csrf">什麼是CSRF?</h3>
+<p>CSRF要能成立的必要條件是，使用者已登入網站。而最常見的場景就是，使用者登入後，單憑瀏覽器與伺服端之間的會話溝通，就確認使用者的身分無誤後而進行各種操作，因而使有心人士，只要能命令瀏覽器做出想要的請求，就能實現攻擊。</p>
+<p>簡單來說就是：有心人士欺騙使用者的瀏覽器，讓其以使用者的名義執行操作。</p>
+<h1 id="form_for">form_for</h1>
+<p>當專案有建立好的 Model 時，就可以使用 form_for來建立表單。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">new</span></span></span><br><span class="line">  @book = Book.new</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_for(@book) <span class="keyword">do</span> <span class="params">|form|</span> %&gt;</span><br><span class="line">  &lt;%= form.input <span class="symbol">:name</span> %&gt;</span><br><span class="line">  &lt;%= form.input <span class="symbol">:price</span> %&gt;</span><br><span class="line">  &lt;%= form.submit <span class="class"><span class="keyword">class</span>: '<span class="title">btn</span> <span class="title">btn</span>-<span class="title">success</span>' %&gt;</span></span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="form_with">form_with</h1>
+<p>直到 Ruby 版本更新到 5.1 之後出現了 form_with。<br>
+form_with 結合了form_tag 和 form_for 的功能，所以接下來不管在有無 Model 的情況下都可以直接使用。</p>
+<p>沒有 Model 時候的 form_with</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">url:</span> users_path <span class="keyword">do</span> <span class="params">|form|</span> %&gt;</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:name</span> %&gt;</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:price</span> %&gt;</span><br><span class="line">  &lt;%= form.submit %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+<p>有 Model 時候的 form_with</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;%= form_with <span class="symbol">model:</span> @user <span class="keyword">do</span> <span class="params">|form|</span> %&gt;</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:name</span> %&gt;</span><br><span class="line">  &lt;%= form.text_field <span class="symbol">:price</span> %&gt;</span><br><span class="line">  &lt;%= form.submit %&gt;</span><br><span class="line">&lt;% <span class="keyword">end</span> %&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="結論">結論</h3>
+<p>簡單來說現在都用form_with就可以做到，form_tag &amp; form_for 的功能，所以以後不管有沒有model，直接用for_with就沒錯拉～</p>
+<h3 id="參考資料">參考資料</h3>
+<p><a href="https://zh.wikipedia.org/wiki/%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0" target="_blank" rel="noopener">CSRF wiki</a><br>
+<a href="https://www.ithome.com.tw/voice/115822" target="_blank" rel="noopener">從防禦認識CSRF</a><br>
+<a href="https://rails.ruby.tw/form_helpers.html#%E8%99%95%E7%90%86-model-%E7%89%A9%E4%BB%B6" target="_blank" rel="noopener">Action View 表單輔助方法</a><br>
+<a href="https://pjchender.github.io/2017/10/12/rails-action-view-form-helpers/" target="_blank" rel="noopener">Action View Form Helpers</a></p>
 
                 
 
@@ -273,13 +251,9 @@ Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )�
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/What-s-Ruby-self/" data-toggle="tooltip" data-placement="top" title="What's Ruby self ?">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/新屋落成/" data-toggle="tooltip" data-placement="top" title="新屋落成！">Next Post &rarr;</a>
+                            <a href="/article/What-s-Ruby-self/" data-toggle="tooltip" data-placement="top" title="What's Ruby self ?">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -335,7 +309,7 @@ Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )�
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#whats-symbol-符號"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">What&#x2019;s Symbol&#xA0;(&#x7B26;&#x865F;)&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#翻譯蒟蒻"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x7FFB;&#x8B6F;&#x849F;&#x84BB;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol跟string有什麼不同"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">Symbol&#x8DDF;String&#x6709;&#x4EC0;&#x9EBC;&#x4E0D;&#x540C;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#這邊我們可以利用以下例子做說明"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x4EE5;&#x4E0B;&#x4F8B;&#x5B50;&#x505A;&#x8AAA;&#x660E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#string"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">String</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.4.1.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">Symbol</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.5.1.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol-amp-string-轉換方法"><span class="toc-nav-number">1.0.6.</span> <span class="toc-nav-text">Symbol &amp; String&#xA0;&#x8F49;&#x63DB;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什麼時候該用symbol-amp-string"><span class="toc-nav-number">1.0.7.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x8A72;&#x7528;Symbol &amp; String&#xA0;?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.8.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.9.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-number">1.0.10.</span> <span class="toc-nav-text">&#x53C3;&#x8003;&#x8CC7;&#x6599;&#xFF1A;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#form_tag"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">form_tag</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什麼是csrf"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x662F;CSRF?</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#form_for"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">form_for</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#form_with"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">form_with</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#結論"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">&#x7D50;&#x8AD6;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">&#x53C3;&#x8003;&#x8CC7;&#x6599;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>
