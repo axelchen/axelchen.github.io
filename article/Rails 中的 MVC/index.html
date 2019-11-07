@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          What&#39;s Ruby self ? - Axel&#39;s | Blog
+          Rails 中的 MVC - Axel&#39;s | Blog
         
     </title>
 
-    <link rel="canonical" href="http://axelchen.com/article/What-s-Ruby-self/">
+    <link rel="canonical" href="http://axelchen.com/article/Rails 中的 MVC/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#學習日記" title="學習日記">學習日記</a>
                             
                         </div>
-                        <h1>What&#39;s Ruby self ?</h1>
+                        <h1>Rails 中的 MVC</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Axel Chen on
-                            2019-09-15
+                            2019-09-21
                         </span>
                     </div>
                 
@@ -212,52 +212,53 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="whats-ruby-self">What’s ruby self ？</h1>
-<p>學習ruby時，常常會在很多method看到self ，那麼self又是什麼呢？<br>
-什麼是self?</p>
-<p>首先我們一樣先從Ruby Api 找尋一下定義</p>
-<blockquote>
-<p><em>self is the “current object” and the default receiver of messages (method calls) for which no explicit receiver is specified. Which object plays the role of self depends on the context.</em></p>
-</blockquote>
-<h3 id="翻譯蒟蒻">翻譯蒟蒻</h3>
-<p>意思是在Ruby中，self代表預設的訊息接收者，不同的範圍或呼叫方式，self代表的物件也不相同。<br>
-我們可以先問看看ruby self是什麼？</p>
-<blockquote>
-<p>self.is_a? Object<br>
-=&gt; true</p>
-</blockquote>
-<blockquote>
-<p>self<br>
-=&gt; main</p>
-</blockquote>
-<blockquote>
-<p>self.instance_of? Object<br>
-=&gt; true</p>
-</blockquote>
+                <h1 id="什麼是-rails">什麼是 Rails ？</h1>
+<p>Rails 是一種「網頁開發的框架」，運用 Ruby 撰寫，因此通常大家會直接用 Ruby on Rails (RoR)或 Rails。</p>
+<h3 id="什麼是網站開發框架web-framework">什麼是網站開發框架(Web framework)？</h3>
+<p>簡易的說網頁開發框架會把開發常用的資料整理好，而你只需在框架中建立資料，就可以簡單快速的做出網站需要的基本功能。</p>
+<p>做個簡單的比較，傳統的做法就是完全徒手建立網站，一行行code建立，完全憑自己的想像跟感覺，但這樣往往費時又費力，很容易迷失方向，而 Framework 的出現也改變了網站開發的生態，使我們在開發過程中，可以透過框架快速建立網站。</p>
+<p>以飲料店為例， Ruby 是後端語言，負責煮茶、備料，而 Rails 就像是一台自動果汁機，讓你不需要從頭處理到尾，只需要負責簡單的操作、將水果、糖倒入果汁機當中，設定好時間，之後就有一杯美味的果汁可以喝拉。</p>
+<h3 id="rails-的主要的設計哲學">Rails 的主要的設計哲學：</h3>
 <ul>
-<li>以Object的實例，可以發現到，在頂層環境中，self是參考至一個名稱為main的物件。</li>
+<li>不做重複的事</li>
+<li>慣例優於設定</li>
 </ul>
-<h3 id="self有兩種意思">self有兩種意思：</h3>
-<blockquote>
-<p>Self在類別(class)裡，代表目前的類別。<br>
-Self在實體(instance)裡，代表目前的實體。</p>
-</blockquote>
-<h3 id="class-類別">Class (類別）</h3>
-<p>在類別定義中 self 代表Cat這個 Class</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> </span></span><br><span class="line">  p <span class="keyword">self</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="comment">#Cat</span></span><br></pre></td></tr></table></figure>
-<p>在類別定義中定義方法，此時的self 代表 Cat 這個 Class</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> </span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">self</span>.<span class="title">meow</span>    </span></span><br><span class="line">    <span class="keyword">self</span>  </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">p Cat.meow</span><br><span class="line">&gt;<span class="comment">#Cat</span></span><br></pre></td></tr></table></figure>
-<p>代表目前類別Cat #&lt;Cat:0x00007ff0c4858470&gt;</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Cat</span> </span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">meow</span>    </span></span><br><span class="line">    <span class="keyword">self</span>  </span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">p Cat.new.meow</span><br><span class="line"><span class="comment">#&lt;Cat:0x00007ff0c4858470&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="module模組">Module(模組）</h3>
-<p>在模組中 self 代表cat 這個Module</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Cat</span></span></span><br><span class="line">  p <span class="keyword">self</span></span><br><span class="line"><span class="keyword">end</span>   </span><br><span class="line"><span class="comment">#Cat</span></span><br></pre></td></tr></table></figure>
-<h3 id="inheritance繼承">inheritance(繼承)</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">module</span> <span class="title">Cat</span></span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">eat</span></span></span><br><span class="line">    p  <span class="keyword">self</span></span><br><span class="line">  <span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Meow</span></span></span><br><span class="line">  <span class="keyword">include</span> Cat</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line">kat = Meow.new</span><br><span class="line">kat.eat</span><br><span class="line">&gt;#&lt;Meow:0x00007fe2ee836228&gt;</span><br></pre></td></tr></table></figure>
-<p>代表self目前為Meow產生的實體</p>
+<h1 id="什麼是-mvc">什麼是 ＭＶＣ？</h1>
+<p>MVC模式（Model–view–controller）是軟體工程中的一種軟體架構模式，把軟體系統分為三個基本部分：模型（Model）、視圖（View）和控制器（Controller）。</p>
+<p>MVC把這些定義落實到專案上,在不改動底層運作的情況下,屬於Controller的Class就該放到Controllers的資料夾、屬於頁面呈現的就放到Views資料夾,且預設也有一個Models的資料夾給你放Model,有了這些規範後,讓習慣來代替配置,你接手別人的MVC專案後, 所有人的開發方式基本上都會依照這個規範去落實,降低維護的成本。</p>
+<h1 id="使用rails開發的好處">使用Rails開發的好處</h1>
+<p>將專案拆解成 MVC 架構後，雖然檔案變多、資料也分散了，但也更容易讓專案進行分工，當團隊人數增加，每個人可以在各自負責的部份進行開發，較不易互相衝突、干擾，達到快速開發的優勢！</p>
+<p>以下圖來解說什麼是ＭＶＣ<br>
+<img src="/img/mvc.png" alt="MVC"></p>
+<p>步驟1～2<br>
+使用者輸入網址，連到網站的時候，第一關會遇到的是路徑對照表（Route，檔案config/routes.rb）。在 Controller 上通常會有一個以上的 Action，這些 Action 是一般 Ruby 裡的方法（method）而已。透過路徑對照表，找到了對應的 Action，這個 Action 會決定要做什麼事。</p>
+<p>步驟3<br>
+舉例來說，在這個 Action 可能會需要查閱「目前所有的書本列表」，接著Controller 就會去請 Model 幫忙查有關書本列表的資料。</p>
+<p>步驟4<br>
+因為Model 本身並不是資料庫，但 Controller 可以幫你把你跟 Model 說的「人<br>
+話」轉成資料庫看得懂的查詢語言（Structured Query Language，簡稱 SQL）。</p>
+<p>步驟5<br>
+透過 SQL，Model 可以跟資料庫取得你想要的資料，並將資料交給Controller</p>
+<p>步驟6<br>
+Controller/Action 拿到資料了，但目前這些資料還沒美化醜醜的，還不適合給使用者看，所以 Controller/Action 還需要跟 View 借一下畫面，讓資料更容易讓使用者閱讀。</p>
+<p>步驟7~8<br>
+Controller/Action 把資料跟 View 的畫面組合，最後呈現的就是我們看到的網頁</p>
+<h3 id="重點整理">重點整理</h3>
+<ul>
+<li>
+<p>Model : 資料的管理(例如與資料庫的溝通) , 演算法邏輯(商業邏輯) , 物件結構定義</p>
+</li>
+<li>
+<p>View : 呈現給使用者看、操作的介面</p>
+</li>
+<li>
+<p>Controller : 依據傳入的資料該怎麼運作、程式流程的控制、該回傳給使用者什麼資料等</p>
+</li>
+</ul>
 <h3 id="心得">心得</h3>
-<p>在類別方法、類別定義、模組定義中，self皆為類別、模組本身。<br>
-而在實體方法、繼承、引入模組時，因為皆使用了實體方法，所以self為該類別產生的實體。</p>
+<p>剛開始對於 MVC 架構，真的是滿頭問號？，但理解完 MVC 後，只能說當初開發 Rails 這套框架的DHH真的太神啦！</p>
+<h3 id="參考資料">參考資料</h3>
+<p><a href="https://railsbook.tw/chapters/10-mvc.html" target="_blank" rel="noopener">Model、View、Controller 三分天下</a></p>
 
                 
 
@@ -266,12 +267,12 @@ Self在實體(instance)裡，代表目前的實體。</p>
                 <ul class="pager">
                     
                         <li class="previous">
-                            <a href="/article/Rails 中的 MVC/" data-toggle="tooltip" data-placement="top" title="Rails 中的 MVC">&larr; Previous Post</a>
+                            <a href="/article/form-for-form-with/" data-toggle="tooltip" data-placement="top" title="Rails form 表單">&larr; Previous Post</a>
                         </li>
                     
                     
                         <li class="next">
-                            <a href="/article/Ruby-世界裡的符號代表什麼？/" data-toggle="tooltip" data-placement="top" title="Ruby 世界的符號代表什麼？">Next Post &rarr;</a>
+                            <a href="/article/What-s-Ruby-self/" data-toggle="tooltip" data-placement="top" title="What's Ruby self ?">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -327,7 +328,7 @@ Self在實體(instance)裡，代表目前的實體。</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#whats-ruby-self"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">What&#x2019;s ruby self&#xA0;&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#翻譯蒟蒻"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x7FFB;&#x8B6F;&#x849F;&#x84BB;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#self有兩種意思"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">self&#x6709;&#x5169;&#x7A2E;&#x610F;&#x601D;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#class-類別"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">Class (&#x985E;&#x5225;&#xFF09;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#module模組"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">Module(&#x6A21;&#x7D44;&#xFF09;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#inheritance繼承"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">inheritance(&#x7E7C;&#x627F;)</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#心得"><span class="toc-nav-number">1.0.6.</span> <span class="toc-nav-text">&#x5FC3;&#x5F97;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#什麼是-rails"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x662F; Rails &#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什麼是網站開發框架web-framework"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x662F;&#x7DB2;&#x7AD9;&#x958B;&#x767C;&#x6846;&#x67B6;(Web framework)&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#rails-的主要的設計哲學"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">Rails &#x7684;&#x4E3B;&#x8981;&#x7684;&#x8A2D;&#x8A08;&#x54F2;&#x5B78;&#xFF1A;</span></a></li></ol></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#什麼是-mvc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x662F; &#xFF2D;&#xFF36;&#xFF23;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#使用rails開發的好處"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">&#x4F7F;&#x7528;Rails&#x958B;&#x767C;&#x7684;&#x597D;&#x8655;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#重點整理"><span class="toc-nav-number">3.0.1.</span> <span class="toc-nav-text">&#x91CD;&#x9EDE;&#x6574;&#x7406;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#心得"><span class="toc-nav-number">3.0.2.</span> <span class="toc-nav-text">&#x5FC3;&#x5F97;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-number">3.0.3.</span> <span class="toc-nav-text">&#x53C3;&#x8003;&#x8CC7;&#x6599;</span></a></li></ol></li></ol></li></ol>
         
         </div>
       </aside>

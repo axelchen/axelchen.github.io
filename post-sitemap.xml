@@ -7,6 +7,22 @@
     </url>
 
     <url>
+        <loc>http://axelchen.com/article/form-for-form-with/</loc>
+        <lastmod>2019-11-07T06:51:35.750Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
+        <loc>http://axelchen.com/article/Rails%20%E4%B8%AD%E7%9A%84%20MVC/</loc>
+        <lastmod>2019-11-07T06:47:37.206Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://axelchen.com/article/%E6%96%B0%E5%B1%8B%E8%90%BD%E6%88%90/</loc>
         <lastmod>2019-11-07T05:38:57.200Z</lastmod>
         <changefreq>weekly</changefreq>
@@ -25,14 +41,6 @@
     <url>
         <loc>http://axelchen.com/article/What-s-Ruby-self/</loc>
         <lastmod>2019-11-07T05:20:53.561Z</lastmod>
-        <changefreq>weekly</changefreq>
-        <priority>0.6</priority>
-
-    </url>
-
-    <url>
-        <loc>http://axelchen.com/article/form-for-form-with/</loc>
-        <lastmod>2019-11-07T05:18:41.680Z</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.6</priority>
 
