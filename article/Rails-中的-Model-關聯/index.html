@@ -14,11 +14,11 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <title>
         
-          Ruby 世界的符號代表什麼？ - Axel&#39;s | Blog
+          Rails 中的 Model 關聯 - Axel&#39;s | Blog
         
     </title>
 
-    <link rel="canonical" href="http://axelchen.com/article/Ruby-世界裡的符號代表什麼？/">
+    <link rel="canonical" href="http://axelchen.com/article/Rails-中的-Model-關聯/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -91,11 +91,11 @@
                               <a class="tag" href="/tags/#學習日記" title="學習日記">學習日記</a>
                             
                         </div>
-                        <h1>Ruby 世界的符號代表什麼？</h1>
+                        <h1>Rails 中的 Model 關聯</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by Axel Chen on
-                            2019-09-12
+                            2019-11-08
                         </span>
                     </div>
                 
@@ -212,60 +212,90 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h1 id="whats-symbol-符號">What’s Symbol (符號)？</h1>
-<p>剛開始學Ruby 常會看到這些 :name, :age ……等等，只知道看到這些前面有:id 的符號，<br>
-它叫symbol ，其他仍然一頭霧水，直到某天突然頓悟了ＸＤ<br>
-到底什麼是Synbol?<br>
-首先，先去Ruby API 查詢一下定義</p>
+                <h2 id="rails-關於你-關於我-關於他-關於她-關於它">Rails 關於你 關於我 關於他 關於她 關於它 😬</h2>
+<h1 id="關於rails-中的-model關聯關係">關於Rails 中的 Model關聯關係</h1>
+<p>Model 關聯關係有以下幾種：</p>
 <blockquote>
-<p><em>Symbol objects represent names and some strings inside the    Ruby interpreter. They are generated using the :name and :“string” literals syntax, and by the various to_sym methods. The same Symbol object will be created for a given name or string for the duration of a program’s execution, regardless of the context or meaning of that name.</em></p>
+<p>belongs_to<br>
+has_one<br>
+has_many<br>
+has_many :through<br>
+has_one :through<br>
+has_and_belongs_to_many</p>
 </blockquote>
-<h3 id="翻譯蒟蒻">翻譯蒟蒻：</h3>
-<p>Symbol 物件表示 Ruby直譯器中的「名稱」及某些「字串」。<br>
-Symbol 可以用：name和：“string” 語法以及各種 to_sym 方法生成。無論內容或含義為何，都會在程序執行的期間為該名稱或字串創建相同的 Symbol 物件。<br>
-看到這邊還是一頭霧水？沒關係一開始我也是！！！<br>
-在Ruby的世界裡任何東西都可以是物件（Object），在這邊可以先把符號（Symbol）想成是一個「有名字的物件」，這樣或許會比較好理解，我們常會看到 :name :age這樣的用法，而這種用法我們就稱為 Symbol，而它所指向的地方，其實是指電腦裡記憶體位置。</p>
-<h3 id="symbol跟string有什麼不同">Symbol跟String有什麼不同？</h3>
-<p>&quot;String的內容可以改變，但Symbol不行！&quot;<br>
-Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )。</p>
-<h3 id="這邊我們可以利用以下例子做說明">這邊我們可以利用以下例子做說明</h3>
-<h3 id="string">String</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span></span><br><span class="line">  puts<span class="string">"hahaha"</span>.object_id</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="這邊會得到">這邊會得到</h4>
-<blockquote>
-<p>70118281331520<br>
-70118281331080<br>
-70118273359620<br>
-70118273359300<br>
-70118273358360</p>
-</blockquote>
-<p>Object_id方法會取得Ruby中唯一的數字編號，從上面例子可以發現Ruby在每次產生新的字串時，都會產生新的Object_id，代表這產生的字串其實都是不同的Object。</p>
-<h3 id="symbol">Symbol</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">5</span>.times <span class="keyword">do</span></span><br><span class="line">  puts <span class="symbol">:hahaha</span>.object_id</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
-<h4 id="這邊會得到">這邊會得到</h4>
-<blockquote>
-<p>1056028<br>
-1056028<br>
-1056028<br>
-1056028<br>
-1056028</p>
-</blockquote>
-<p>有發現嗎？只要都是一樣的Symbol，就會有相同的Object_id，表示這些Symbol都是從記憶體一樣的地方拿取資料，而不是產生新的一份資料，這樣的好處是可以節省記憶體的空間。</p>
-<h3 id="symbol-amp-string-轉換方法">Symbol &amp; String 轉換方法</h3>
-<p>使用 to_sym 可把字串轉成 symbol</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="string">"cat"</span>.to_sym</span><br><span class="line">=&gt; <span class="symbol">:cat</span></span><br></pre></td></tr></table></figure>
-<p>使用 to_s 方法可以把 symbol 轉成字串</p>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="symbol">:cat</span>.to_s</span><br><span class="line">=&gt; <span class="string">"cat"</span></span><br></pre></td></tr></table></figure>
-<h3 id="什麼時候該用symbol-amp-string">什麼時候該用Symbol &amp; String ?</h3>
-<p>因為Symbol不可變( immutable )特性，以及從記憶體查找資料的速度比String還要快，適合用來當Hash的Key來找尋資料。</p>
-<h3 id="範例">範例</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">data = &#123; <span class="symbol">name:</span> <span class="string">"小明"</span> , <span class="symbol">age:</span> <span class="number">22</span> , <span class="symbol">degree:</span> <span class="string">"大學"</span> &#125;</span><br><span class="line">=&gt;&#123; <span class="symbol">:name=&gt;<span class="string">"小明"</span></span>, <span class="symbol">:age=&gt;</span> <span class="number">22</span> , <span class="symbol">:degree=&gt;</span> <span class="string">"大學"</span> &#125;</span><br></pre></td></tr></table></figure>
-<p>而如果單純只是想把資料印出來，那String就很適合，因為Symbol被輸出時，要先轉換成字串，這樣效能上字串上就佔有優勢！</p>
-<h3 id="範例">範例</h3>
-<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">puts <span class="string">"Hello, World"</span></span><br></pre></td></tr></table></figure>
-<h3 id="參考資料">參考資料：</h3>
-<p><a href="https://ruby-doc.org/core-2.5.0/Symbol.html" target="_blank" rel="noopener">Ruby Doc</a><br>
-<a href="https://kaochenlong.com/2016/04/25/string-and-symbol/" target="_blank" rel="noopener">Ruby 語法放大鏡之「有的變數變前面有一個冒號(例如 :name)，是什麼意思?」</a></p>
+<h1 id="一對一關係belongs_tohas_one">一對一關係：belongs_to/has_one</h1>
+<p>belongs_to 關聯：宣告一個 Model 實體，屬於另一個 Model 實體。<br>
+舉例：一間店只屬於一個店長。</p>
+<p>has_one 關聯：建立兩個 Model 之間的一對一關係，但語義和結果與 belongs_to 不同。<br>
+has_one 關聯宣告一個 Model 實體，含有（或持有）另一個 Model 實體。<br>
+舉例：一個店長只有一間店。</p>
+<p>我們可以實作以下範例<br>
+先建立 Model</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ rails g model User name </span><br><span class="line">$ rails g model Store store_number <span class="symbol">user_id:</span>integer</span><br><span class="line">$ rails <span class="symbol">db:</span>migrate</span><br></pre></td></tr></table></figure>
+<p>這邊要注意的是，我們在 Store 這個 Model 建立一個 user_id:integer，主要是用來跟 User 這個 Tabel 的 <a href="http://User.id" target="_blank" rel="noopener">User.id</a> 做連結（外部鍵foreign key），在Rails 的慣例中，他會是對應到的 Model 名稱_id。<br>
+剛剛建立的只是兩個Model的架構，現在要幫兩個Model建立關聯：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ActiveRecord::Base</span></span><br><span class="line">  has_one <span class="symbol">:task</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> &lt; ActiveRecord::Base</span></span><br><span class="line">  belongs_to <span class="symbol">:user</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>你可以直接從字面上的意思去解讀：<br>
+User 這個類別只對應到一個(has_one) Store，<br>
+每一個 Store 都是屬於(belongs_to) User。</p>
+<h1 id="belongs_to-has_one-關聯方法">belongs_to/ has_one 關聯方法</h1>
+<p>設定關聯後，Model 可以使用這些實體方法：</p>
+<ul>
+<li>user</li>
+<li>user=</li>
+<li>build_user</li>
+<li>create_user</li>
+</ul>
+<p>而User 這個 Model 可以使用這些實體方法：</p>
+<ul>
+<li>store</li>
+<li>store=</li>
+<li>build_store</li>
+<li>create_store</li>
+</ul>
+<p>我們來進 console 來試著了解看看<br>
+先建立user 跟 store<br>
+<img src="/img/model1.png" alt="建立model"><br>
+<img src="/img/model2.png" alt="建立store"><br>
+<img src="/img/model3.png" alt="查詢store"></p>
+<ul>
+<li>
+<p>這邊可以透過剛剛創建的User id 與 Store user_id 之間的關聯性，查詢<br>
+剛剛創建的 User 商店。</p>
+</li>
+<li>
+<p>在 Rails 5後，在沒有 User 的情況下 create 一個 Store，是寫不進去的。<br>
+這是 Rails 5 之後對 belongs_to 加入的新限制，需要有 User 才能建立 Store。</p>
+</li>
+</ul>
+<h1 id="一對多關係belongs_tohas_may">一對多關係：belongs_to/has_may</h1>
+<p>has_many 關聯建立兩個 Model 之間的一對多關係，通常 has_many 對應的是 belongs_to 關聯。<br>
+has_many 關聯宣告一個 Model 實體，有零個或多個Model 實體。<br>
+舉例來說：每個 User 有多個 Member</p>
+<p>先建立 Member 的 Model，user_id 同樣用來跟User做連結</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ rails generate model Member <span class="symbol">name:</span>string <span class="symbol">user_id:</span>integer</span><br><span class="line">$ rails <span class="symbol">db:</span>migrate</span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#user.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">User</span> &lt; ApplicationRecord</span></span><br><span class="line">  has_one <span class="symbol">:account</span></span><br><span class="line">  has_many <span class="symbol">:members</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#member.rb</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Member</span> &lt; ApplicationRecord</span></span><br><span class="line">  belings_to <span class="symbol">:user</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<p>建立 user 的三個 member</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">u1<span class="number">0</span>.members &lt;&lt; Member.new(<span class="symbol">name:</span><span class="string">'member1'</span>)</span><br><span class="line">u1<span class="number">0</span>.members &lt;&lt; Member.new(<span class="symbol">name:</span><span class="string">'member2'</span>)</span><br><span class="line">u1<span class="number">0</span>.members &lt;&lt; Member.new(<span class="symbol">name:</span><span class="string">'member3'</span>)</span><br></pre></td></tr></table></figure>
+<p><img src="/img/model4.png" alt="一對多"></p>
+<p>查詢User的所有的員工</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User.members.all</span><br></pre></td></tr></table></figure>
+<h1 id="多對多關係has_many-through-關聯">多對多關係：has_many :through 關聯</h1>
+<p>has_many :through 關聯通常用來建立兩個 Model 之間的多對多關係。has_many :through 關聯透過（through）第三個 Model，宣告一個 Model 實體，可有零個或多個另一個 Model 實體。<br>
+舉例，顧客需要透過員工來找主管。相對應的宣告如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Manager</span> &lt; ActiveRecord::Base</span></span><br><span class="line">  has_many <span class="symbol">:members</span></span><br><span class="line">  has_many <span class="symbol">:customers</span>, <span class="symbol">through:</span> <span class="symbol">:members</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Member</span> &lt; ActiveRecord::Base</span></span><br><span class="line">  belongs_to <span class="symbol">:manager</span></span><br><span class="line">  belongs_to <span class="symbol">:customer</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Customer</span> &lt; ActiveRecord::Base</span></span><br><span class="line">  has_many <span class="symbol">:members</span></span><br><span class="line">  has_many <span class="symbol">:managers</span>, <span class="symbol">through:</span> <span class="symbol">:members</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></table></figure>
+<h1 id="belongs_to-關聯支援選項">belongs_to 關聯支援選項：</h1>
+<p>Rails 的預設設定足夠應付多數狀況，但總會有需要客製化 belongs_to 關聯行為的時候。<br>
+這種時候透過傳入選項，以及建立關聯時，便可輕易完成。<br>
+<img src="/img/model5.png" alt="補充"></p>
+<h1 id="心得">心得</h1>
+<p>還記得剛開始了解關聯性時，時常暈頭轉向搞不太清楚，一邊寫文章一邊複習，讓自己對於關聯性有更清楚的認識 😆</p>
+<h1 id="參考資料">參考資料</h1>
+<p><a href="https://railsbook.tw/chapters/18-model-relationship.html" target="_blank" rel="noopener">為你自己學ruby on rails</a></p>
 
                 
 
@@ -273,13 +303,9 @@ Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )�
                 <!-- Pager -->
                 <ul class="pager">
                     
-                        <li class="previous">
-                            <a href="/article/What-s-Ruby-self/" data-toggle="tooltip" data-placement="top" title="What's Ruby self ?">&larr; Previous Post</a>
-                        </li>
-                    
                     
                         <li class="next">
-                            <a href="/article/新屋落成/" data-toggle="tooltip" data-placement="top" title="新屋落成！">Next Post &rarr;</a>
+                            <a href="/article/form-for-form-with/" data-toggle="tooltip" data-placement="top" title="Rails form 表單">Next Post &rarr;</a>
                         </li>
                     
                 </ul>
@@ -335,7 +361,7 @@ Symbol 是不可變動的( immutable )， String 是可以變動的( mutable )�
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#whats-symbol-符號"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">What&#x2019;s Symbol&#xA0;(&#x7B26;&#x865F;)&#xFF1F;</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#翻譯蒟蒻"><span class="toc-nav-number">1.0.1.</span> <span class="toc-nav-text">&#x7FFB;&#x8B6F;&#x849F;&#x84BB;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol跟string有什麼不同"><span class="toc-nav-number">1.0.2.</span> <span class="toc-nav-text">Symbol&#x8DDF;String&#x6709;&#x4EC0;&#x9EBC;&#x4E0D;&#x540C;&#xFF1F;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#這邊我們可以利用以下例子做說明"><span class="toc-nav-number">1.0.3.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6211;&#x5011;&#x53EF;&#x4EE5;&#x5229;&#x7528;&#x4EE5;&#x4E0B;&#x4F8B;&#x5B50;&#x505A;&#x8AAA;&#x660E;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#string"><span class="toc-nav-number">1.0.4.</span> <span class="toc-nav-text">String</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.4.1.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol"><span class="toc-nav-number">1.0.5.</span> <span class="toc-nav-text">Symbol</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#這邊會得到"><span class="toc-nav-number">1.0.5.1.</span> <span class="toc-nav-text">&#x9019;&#x908A;&#x6703;&#x5F97;&#x5230;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#symbol-amp-string-轉換方法"><span class="toc-nav-number">1.0.6.</span> <span class="toc-nav-text">Symbol &amp; String&#xA0;&#x8F49;&#x63DB;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#什麼時候該用symbol-amp-string"><span class="toc-nav-number">1.0.7.</span> <span class="toc-nav-text">&#x4EC0;&#x9EBC;&#x6642;&#x5019;&#x8A72;&#x7528;Symbol &amp; String&#xA0;?</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.8.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#範例"><span class="toc-nav-number">1.0.9.</span> <span class="toc-nav-text">&#x7BC4;&#x4F8B;</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-number">1.0.10.</span> <span class="toc-nav-text">&#x53C3;&#x8003;&#x8CC7;&#x6599;&#xFF1A;</span></a></li></ol></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#rails-關於你-關於我-關於他-關於她-關於它"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">Rails &#x95DC;&#x65BC;&#x4F60; &#x95DC;&#x65BC;&#x6211; &#x95DC;&#x65BC;&#x4ED6; &#x95DC;&#x65BC;&#x5979; &#x95DC;&#x65BC;&#x5B83; &#x1F62C;</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#關於rails-中的-model關聯關係"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x95DC;&#x65BC;Rails &#x4E2D;&#x7684; Model&#x95DC;&#x806F;&#x95DC;&#x4FC2;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一對一關係belongs_tohas_one"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x4E00;&#x5C0D;&#x4E00;&#x95DC;&#x4FC2;&#xFF1A;belongs_to/has_one</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#belongs_to-has_one-關聯方法"><span class="toc-nav-number"></span> <span class="toc-nav-text">belongs_to/ has_one &#x95DC;&#x806F;&#x65B9;&#x6CD5;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#一對多關係belongs_tohas_may"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x4E00;&#x5C0D;&#x591A;&#x95DC;&#x4FC2;&#xFF1A;belongs_to/has_may</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#多對多關係has_many-through-關聯"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x591A;&#x5C0D;&#x591A;&#x95DC;&#x4FC2;&#xFF1A;has_many :through &#x95DC;&#x806F;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#belongs_to-關聯支援選項"><span class="toc-nav-number"></span> <span class="toc-nav-text">belongs_to &#x95DC;&#x806F;&#x652F;&#x63F4;&#x9078;&#x9805;&#xFF1A;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#心得"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x5FC3;&#x5F97;</span></a></li><li class="toc-nav-item toc-nav-level-1"><a class="toc-nav-link" href="#參考資料"><span class="toc-nav-number"></span> <span class="toc-nav-text">&#x53C3;&#x8003;&#x8CC7;&#x6599;</span></a>
         
         </div>
       </aside>
